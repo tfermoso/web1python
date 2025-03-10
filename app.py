@@ -39,7 +39,7 @@ def login():
         datos = (username,password)
         cursor.execute(consulta,datos)
         resultados = cursor.fetchone()
-        if(len(resultados)>0):
+        if(resultados):
             #guardar datos en session
             session['username'] = username
             return redirect(url_for('admin'))
