@@ -11,7 +11,9 @@ conexion = pymysql.connect(
 try:
     with conexion.cursor() as cursor:
         #creamos la consulta 
-        consulta = "SELECT * FROM actor"
+        #consulta = "SELECT * FROM actor"
+        #insertar datos
+        consulta = "INSERT INTO actor(first_name,last_name) VALUES('Juan','Perez')"
         #ejecutamos la consulta 
         cursor.execute(consulta)
         #obtenemos los resultados
