@@ -30,23 +30,22 @@ def login():
         host='localhost',
         user='root', 
         password='', 
-        db='sakila')
+        db='tiendamvc')
     try:
         with conexion.cursor() as cursor:
             #creamos la consulta
-            consulta = '''SELECT * FROM usuario 
-            WHERE username = %s AND password = %s'''
-        datos = (username,password)
-        cursor.execute(consulta,datos)
-        resultados = cursor.fetchone()
-        if(resultados):
-            #guardar datos en session
-            session['username'] = username
-            return redirect(url_for('admin'))
-        else:
-            return render_template("index.html",mensaje="Usuario o contraseña incorrecta")
+            consulta = "SELECT * FROM user WHERE username = %s AND password = %s"
+            datos = (username,password)
+            cursor.execute(consulta,datos)
+            resultados = cursor.fetchone()
+            if(resultados):
+                #guardar datos en session
+                session['username'] = username
+                return redirect(url_for('admin'))
+            else:
+                return render_template("index.html",mensaje="Usuario o contraseña incorrecta")
     except Exception as e:
-        print("Ocurrió un error al consultar: ", e)
+        print("Ocurrió un error al conectar a la bbdd: ", e)
     finally:    
         conexion.close()
         print("Conexión cerrada") 
