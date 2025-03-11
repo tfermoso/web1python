@@ -1,5 +1,6 @@
 from flask import Flask,render_template,request,redirect,url_for,session
 import pymysql
+import db
 
 
 
@@ -9,13 +10,7 @@ app.secret_key="123456"
 
 @app.route('/')
 def home():
-    conexion = pymysql.connect(
-        host='localhost',
-        user='root', 
-        password='', 
-        db='tiendamvc',
-        cursorclass=pymysql.cursors
-        .DictCursor)
+    conexion = db.get_connection()
     try:
         with conexion.cursor() as cursor:
                 consulta = "SELECT * FROM product"
@@ -47,11 +42,7 @@ def login():
     username = request.form['username'] 
     password = request.form['password']
     #creamos la conexion
-    conexion = pymysql.connect(
-        host='localhost',
-        user='root', 
-        password='', 
-        db='tiendamvc')
+    conexion = db.get_connection()
     try:
         with conexion.cursor() as cursor:
             #creamos la consulta
