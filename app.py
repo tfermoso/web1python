@@ -13,13 +13,15 @@ def home():
         host='localhost',
         user='root', 
         password='', 
-        db='tiendamvc')
+        db='tiendamvc',
+        cursorclass=pymysql.cursors
+        .DictCursor)
     try:
         with conexion.cursor() as cursor:
-                consulta = "SELECT * FROM producto"
+                consulta = "SELECT * FROM product"
                 cursor.execute(consulta)
                 resultados = cursor.fetchall()
-                return render_template("home.html",resultados=resultados)
+                return render_template("home.html",products=resultados)
     except Exception as e:  
         print("Ocurrió un error al conectar a la bbdd: ", e)
     finally:    
