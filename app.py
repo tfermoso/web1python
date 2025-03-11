@@ -7,6 +7,25 @@ import pymysql
 app = Flask(__name__)
 app.secret_key="123456"
 
+@app.route('/')
+def home():
+    conexion = pymysql.connect(
+        host='localhost',
+        user='root', 
+        password='', 
+        db='tiendamvc')
+    try:
+        with conexion.cursor() as cursor:
+                consulta = "SELECT * FROM producto"
+                cursor.execute(consulta)
+                resultados = cursor.fetchall()
+                return render_template("home.html",resultados=resultados)
+    except Exception as e:  
+        print("Ocurrió un error al conectar a la bbdd: ", e)
+    finally:    
+        conexion.close()
+        print("Conexión cerrada")   
+
 @app.route('/login',methods=['GET'])
 def index():
     return render_template("index.html")
